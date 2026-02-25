@@ -1,18 +1,7 @@
-## Getting Started
+## Ejercicio 13
+Modifica el programa Gestisimal realizado anteriormente añadiendo las siguientes mejoras:
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
-
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+- Utiliza una lista en lugar de un array para el almacenamiento de los datos.
+- Comprueba la existencia del código en el alta, la baja y la modificación de artículos para evitar errores.
+- Cambia la opción “Salida de stock” por “Venta”. Esta nueva opción permitirá hacer una venta de varios artículos y emitir la factura correspondiente. Se debe preguntar por los códigos y las cantidades
+de cada artículo que se quiere comprar. Aplica un 21% de IVA.
