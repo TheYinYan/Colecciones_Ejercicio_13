@@ -13,6 +13,7 @@ public class App {
         Articulos articulosAux = null;
 
         listaArticulos.add(new Articulos(++codigo, "Cepillo dientes", 12, 15, 5));
+        listaArticulos.add(new Articulos(++codigo, "Coche", 5, 10, 5));
         do {
             System.out.println("""
 
@@ -21,7 +22,7 @@ public class App {
                         3. Baja
                         4. Modificación
                         5. Entrada de mercancía
-                        6. Salida de mercancía
+                        6. Venta
                         7. Salir
 
                     """);
@@ -33,36 +34,61 @@ public class App {
                     }
                     break;
                 case 2:
-                    name = System.console().readLine("Nombre: ");
-                    precioCompra = Integer.parseInt(System.console().readLine("Precio de compra: "));
-                    precioVenta = Integer.parseInt(System.console().readLine("Precio de venta: "));
-                    stock = Integer.parseInt(System.console().readLine("Stock: "));
-                    listaArticulos.add(new Articulos(++codigo, name, precioCompra, precioVenta, stock));
-                    break;
-                case 3:
-                    codigo = Integer.parseInt(System.console().readLine("Codigo del producto que a eliminar: "));
-                    indice = 0;
-                    for (Articulos articulos : listaArticulos) {
-                        if (articulos.getCodigo() == codigo) {
-                            listaArticulos.remove(indice);
-                        }
-                        indice++;
-                    }
-                    break;
-                case 4:
-                    codigo = Integer.parseInt(System.console().readLine("Codigo del producto que a modificar: "));
-                    name = System.console().readLine("Nombre: ");
-                    precioCompra = Integer.parseInt(System.console().readLine("Precio de compra: "));
-                    precioVenta = Integer.parseInt(System.console().readLine("Precio de venta: "));
-                    stock = Integer.parseInt(System.console().readLine("Stock: "));
+                    codigo = Integer.parseInt(System.console().readLine("Codigo del producto: "));
                     for (Articulos articulos : listaArticulos) {
                         if (articulos.getCodigo() == codigo) {
                             articulosAux = articulos;
                         }
                     }
-                    listaArticulos.remove(articulosAux.getCodigo() - 1);
-                    listaArticulos.add(new Articulos(codigo, name, precioCompra, precioVenta, stock));
-
+                    if (!listaArticulos.contains(articulosAux)) {
+                        name = System.console().readLine("Nombre: ");
+                        precioCompra = Integer.parseInt(System.console().readLine("Precio de compra: "));
+                        precioVenta = Integer.parseInt(System.console().readLine("Precio de venta: "));
+                        stock = Integer.parseInt(System.console().readLine("Stock: "));
+                        listaArticulos.add(new Articulos(codigo, name, precioCompra, precioVenta, stock));
+                    } else {
+                        System.out.println("Ese producto ya existe");
+                    }
+                    break;
+                case 3:
+                    codigo = Integer.parseInt(System.console().readLine("Codigo del producto que a eliminar: "));
+                    for (Articulos articulos : listaArticulos) {
+                        if (articulos.getCodigo() == codigo) {
+                            articulosAux = articulos;
+                        }
+                    }
+                    if (listaArticulos.contains(articulosAux)) {
+                        indice = 0;
+                        for (Articulos articulos : listaArticulos) {
+                            if (articulos.getCodigo() == codigo) {
+                                listaArticulos.remove(indice);
+                            }
+                            indice++;
+                        }
+                    } else {
+                        System.out.println("Ese producto no existe");
+                    }
+                    break;
+                case 4:
+                    codigo = Integer.parseInt(System.console().readLine("Codigo del producto que a modificar: "));
+                    for (Articulos articulos : listaArticulos) {
+                        if (articulos.getCodigo() == codigo) {
+                            articulosAux = articulos;
+                        }
+                    }
+                    if (!listaArticulos.contains(articulosAux)) {
+                        name = System.console().readLine("Nombre: ");
+                        precioCompra = Integer.parseInt(System.console().readLine("Precio de compra: "));
+                        precioVenta = Integer.parseInt(System.console().readLine("Precio de venta: "));
+                        stock = Integer.parseInt(System.console().readLine("Stock: "));
+                        for (Articulos articulos : listaArticulos) {
+                            if (articulos.getCodigo() == codigo) {
+                                articulosAux = articulos;
+                            }
+                        }
+                        listaArticulos.remove(articulosAux.getCodigo() - 1);
+                        listaArticulos.add(new Articulos(codigo, name, precioCompra, precioVenta, stock));
+                    }
                     break;
                 case 5:
                     codigo = Integer.parseInt(System.console().readLine("Codigo del producto: "));
@@ -77,16 +103,46 @@ public class App {
                             articulosAux.getPrecioCompra(), articulosAux.getPrecioVenta(), stock));
                     break;
                 case 6:
-                    codigo = Integer.parseInt(System.console().readLine("Codigo del producto: "));
-                    for (Articulos articulos : listaArticulos) {
-                        if (articulos.getCodigo() == codigo) {
-                            articulosAux = articulos;
+                    int cantidad = Integer.parseInt(System.console().readLine("Cuantos productos va a comprar: "));
+                    ArrayList<Articulos> carrito = new ArrayList<>(cantidad);
+                    int total = 0;
+                    for (int i = 0; i < cantidad; i++) {
+                        System.out.println("""
+                                *****************
+                                *   Productos   *
+                                *****************
+                                """);
+                        for (Articulos articulos : listaArticulos) {
+                            System.out.println(articulos);
                         }
+                        codigo = Integer.parseInt(System.console().readLine("Codigo del producto: "));
+                        for (Articulos articulos : listaArticulos) {
+                            if (articulos.getCodigo() == codigo) {
+                                articulosAux = articulos;
+                            }
+                        }
+                        int numArt = Integer.parseInt(System.console().readLine("Cantidad a vendida: "));
+                        stock = articulosAux.stock - numArt;
+                        carrito.add(new Articulos(codigo, articulosAux.getDescripcion(),
+                                articulosAux.getPrecioCompra(), articulosAux.getPrecioVenta(), numArt));
+
+                        listaArticulos.remove(articulosAux.getCodigo() - 1);
+                        listaArticulos.add(new Articulos(codigo, articulosAux.getDescripcion(),
+                                articulosAux.getPrecioCompra(), articulosAux.getPrecioVenta(), stock));
                     }
-                    stock = articulosAux.stock - Integer.parseInt(System.console().readLine("Cantidad a vendida: "));
-                    listaArticulos.remove(articulosAux.getCodigo() - 1);
-                    listaArticulos.add(new Articulos(codigo, articulosAux.getDescripcion(),
-                            articulosAux.getPrecioCompra(), articulosAux.getPrecioVenta(), stock));
+                    System.out.println("""
+                            **********************
+                            *       Factura      *
+                            **********************
+                                """);
+                    for (Articulos articulos : carrito) {
+                        System.out.println(articulos.factura());
+                        total += articulos.getPrecioVenta()*articulos.getStock();
+                    }
+                    System.out.printf("""
+                            Precio sin IVA(21%%): %d $
+                            Precio con IVA(21%%): %.2f $
+                                """, total, total * 1.21);
                     break;
             }
         } while (opcion != 7);

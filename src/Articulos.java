@@ -13,17 +13,6 @@ public class Articulos {
         this.stock = stock;
     }
 
-    @Override
-    public String toString() {
-        return String.format("""
-                El Articulo %s tiene
-                Codigo: %d
-                Precio Compra: %d$
-                Precio Venta: %d$
-                Stock: %d productos
-                            """, descripcion,codigo,precioCompra,precioVenta,stock);
-    }
-
     public int getCodigo() {
         return codigo;
     }
@@ -43,4 +32,22 @@ public class Articulos {
     public int getStock() {
         return stock;
     }
+
+    public String factura(){
+        return String.format("""  
+            Codigo: %d - Nombre: %s - Cantidad: %d -  Precio: %d $         
+                """, codigo,descripcion,stock,precioVenta);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("""
+                El Articulo %s tiene
+                Codigo: %d
+                Precio Compra: %d $
+                Precio Venta: %d $
+                Stock: %d productos
+                            """, descripcion,codigo,precioCompra,precioVenta,stock);
+    }
+
 }
