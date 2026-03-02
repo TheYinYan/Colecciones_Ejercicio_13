@@ -12,6 +12,25 @@ public class Articulos {
         this.precioVenta = precioVenta;
         this.stock = stock;
     }
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPrecioCompra(int precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public void setPrecioVenta(int precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
     public int getCodigo() {
         return codigo;
@@ -49,5 +68,6 @@ public class Articulos {
                 Stock: %d productos
                             """, descripcion,codigo,precioCompra,precioVenta,stock);
     }
+
 
 }

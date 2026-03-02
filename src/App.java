@@ -76,18 +76,13 @@ public class App {
                             articulosAux = articulos;
                         }
                     }
-                    if (!listaArticulos.contains(articulosAux)) {
-                        name = System.console().readLine("Nombre: ");
-                        precioCompra = Integer.parseInt(System.console().readLine("Precio de compra: "));
-                        precioVenta = Integer.parseInt(System.console().readLine("Precio de venta: "));
-                        stock = Integer.parseInt(System.console().readLine("Stock: "));
-                        for (Articulos articulos : listaArticulos) {
-                            if (articulos.getCodigo() == codigo) {
-                                articulosAux = articulos;
-                            }
-                        }
-                        listaArticulos.remove(articulosAux.getCodigo() - 1);
-                        listaArticulos.add(new Articulos(codigo, name, precioCompra, precioVenta, stock));
+                    if (listaArticulos.contains(articulosAux)) {
+                        articulosAux.setDescripcion(System.console().readLine("Nombre: "));
+                        articulosAux.setPrecioCompra(Integer.parseInt(System.console().readLine("Precio de compra: ")));
+                        articulosAux.setPrecioVenta(Integer.parseInt(System.console().readLine("Precio de venta: ")));
+                        articulosAux.setStock(Integer.parseInt(System.console().readLine("Stock: ")));
+                    } else {
+                        System.out.println("Ese producto no existe");
                     }
                     break;
                 case 5:
@@ -97,10 +92,8 @@ public class App {
                             articulosAux = articulos;
                         }
                     }
-                    stock = articulosAux.stock + Integer.parseInt(System.console().readLine("Cantidad a comprada: "));
-                    listaArticulos.remove(articulosAux.getCodigo() - 1);
-                    listaArticulos.add(new Articulos(codigo, articulosAux.getDescripcion(),
-                            articulosAux.getPrecioCompra(), articulosAux.getPrecioVenta(), stock));
+                    articulosAux
+                            .setStock(articulosAux.getStock() + Integer.parseInt(System.console().readLine("Stock: ")));
                     break;
                 case 6:
                     int cantidad = Integer.parseInt(System.console().readLine("Cuantos productos va a comprar: "));
@@ -122,13 +115,9 @@ public class App {
                             }
                         }
                         int numArt = Integer.parseInt(System.console().readLine("Cantidad a vendida: "));
-                        stock = articulosAux.stock - numArt;
+                        articulosAux.setStock(articulosAux.stock - numArt);
                         carrito.add(new Articulos(codigo, articulosAux.getDescripcion(),
                                 articulosAux.getPrecioCompra(), articulosAux.getPrecioVenta(), numArt));
-
-                        listaArticulos.remove(articulosAux.getCodigo() - 1);
-                        listaArticulos.add(new Articulos(codigo, articulosAux.getDescripcion(),
-                                articulosAux.getPrecioCompra(), articulosAux.getPrecioVenta(), stock));
                     }
                     System.out.println("""
                             **********************
@@ -137,7 +126,7 @@ public class App {
                                 """);
                     for (Articulos articulos : carrito) {
                         System.out.println(articulos.factura());
-                        total += articulos.getPrecioVenta()*articulos.getStock();
+                        total += articulos.getPrecioVenta() * articulos.getStock();
                     }
                     System.out.printf("""
                             Precio sin IVA(21%%): %d $
